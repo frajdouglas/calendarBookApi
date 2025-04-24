@@ -17,36 +17,45 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Calendar Booking API' });
 });
 
-// app.get('/calendar/availability' ,getAccessToken , async (req, res) => {
-//   const accessToken = req.accessToken;  // Access the token from req
-//   let timeMin = new Date().toISOString();
-//   let timeMax = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
-//     if (!accessToken) {
-//         return res.status(400).send('Access token is missing or invalid');
-//     }
+app.get('/calendar/availability' ,getAccessToken , async (req, res) => {
+  const accessToken = req.accessToken;  // Access the token from req
+  let timeMin = new Date().toISOString();
+  let timeMax = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+    if (!accessToken) {
+        return res.status(400).send('Access token is missing or invalid');
+    }
 
-//     try {
-//       // Initialize the Google Calendar API client
-//       const calendar = google.calendar({ version: 'v3', auth: accessToken });
+    try {
+      // Initialize the Google Calendar API client
+      // const calendar = google.calendar({ version: 'v3', auth: accessToken });
 
-//       // Define the parameters for the availability query
-//       const params = {
-//           calendarId: 'primary',  // Use 'primary' for the primary calendar
-//           timeMin: timeMin,  // The start time of the window (ISO string)
-//           timeMax: timeMax,  // The end time of the window (ISO string)
-//           singleEvents: true,  // Only single events (not recurring ones)
-//           orderBy: 'startTime',  // Order events by start time
-//       };
+      const oauth2Client = new google.auth.OAuth2();
+      oauth2Client.setCredentials({ access_token: accessToken });
+  
+      // Initialize the Google Calendar API client
+      const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+  
+  
 
-//       // Call the Google Calendar API to get the events in the specified time range
-//       const response = await calendar.events.list(params);
+      // Define the parameters for the availability query
+      const params = {
+          calendarId: 'primary',  // Use 'primary' for the primary calendar
+          timeMin: timeMin,  // The start time of the window (ISO string)
+          timeMax: timeMax,  // The end time of the window (ISO string)
+          singleEvents: true,  // Only single events (not recurring ones)
+          orderBy: 'startTime',  // Order events by start time
+      };
 
-//       // Return the event data
-//       return response.data.items;  // List of events in the specified time range
-//   } catch (error) {
-//       throw new Error('Error fetching calendar availability: ' + error.message);
-//   }
-// });
+      // Call the Google Calendar API to get the events in the specified time range
+      const response = await calendar.events.list(params);
+
+      // Return the event data
+      console.log(response.data.items)
+      return response.data.items;  // List of events in the specified time range
+  } catch (error) {
+      throw new Error('Error fetching calendar availability: ' + error.message);
+  }
+});
 
 // I DONT THINK WE WANT THIS IN PRODUCTION, IT IS A ONE TIME THING
 app.get('/oauth2callback', async (req, res) => {
