@@ -15,6 +15,14 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Calendar Booking API' });
 });
 
+app.get('/calendar/availability', async (req, res) => {
+    // Set the refresh token to get access token
+    oauth2Client.setCredentials({
+      refresh_token: 'YOUR_REFRESH_TOKEN'
+    });
+});
+
+// I DONT THINK WE WANT THIS IN PRODUCTION, IT IS A ONE TIME THING
 app.get('/oauth2callback', async (req, res) => {
     const code = req.query.code;  // This is where the authorization code is sent by Google
     console.log(code)
