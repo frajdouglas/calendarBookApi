@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const getAccessToken = require('./middleware/getAccessToken');
 require('dotenv').config();
 
 const app = express();
@@ -15,11 +16,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Calendar Booking API' });
 });
 
-app.get('/calendar/availability', async (req, res) => {
+app.get('/calendar/availability',getAccessToken, async (req, res) => {
     // Set the refresh token to get access token
-    oauth2Client.setCredentials({
-      refresh_token: 'YOUR_REFRESH_TOKEN'
-    });
 });
 
 // I DONT THINK WE WANT THIS IN PRODUCTION, IT IS A ONE TIME THING
