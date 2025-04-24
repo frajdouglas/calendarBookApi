@@ -15,7 +15,11 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Calendar Booking API' });
 });
 
-// Start server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-}); 
+// Only start the server if we're not in a test environment
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}
+
+module.exports = app; 
