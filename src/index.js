@@ -17,10 +17,12 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Calendar Booking API' });
 });
 
-app.get('/calendar/availability' ,getAccessToken , async (req, res) => {
+app.get('/calendar/availability' , getAccessToken , async (req, res) => {
   const accessToken = req.accessToken;  // Access the token from req
-  let timeMin = new Date().toISOString();
-  let timeMax = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+  const timeMin = new Date().toISOString(); // Current date
+  const timeMax = new Date();
+  timeMax.setMonth(timeMax.getMonth() + 1); // Two months ahead
+  const timeMaxISO = timeMax.toISOString();
     if (!accessToken) {
         return res.status(400).send('Access token is missing or invalid');
     }
@@ -41,7 +43,7 @@ app.get('/calendar/availability' ,getAccessToken , async (req, res) => {
       const params = {
           calendarId: 'primary',  // Use 'primary' for the primary calendar
           timeMin: timeMin,  // The start time of the window (ISO string)
-          timeMax: timeMax,  // The end time of the window (ISO string)
+          timeMax: timeMaxISO,  // The end time of the window (ISO string)
           singleEvents: true,  // Only single events (not recurring ones)
           orderBy: 'startTime',  // Order events by start time
       };
