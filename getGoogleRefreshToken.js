@@ -1,12 +1,13 @@
 // getGoogleRefreshToken.js
 const { google } = require('googleapis');
 const readline = require('readline');
+require('dotenv').config();
 
 // Replace with your actual client ID and secret
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
-
+console.log(REDIRECT_URI)
 const oauth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
