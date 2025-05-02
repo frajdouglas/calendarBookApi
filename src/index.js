@@ -53,7 +53,18 @@ app.get('/calendar/availability' , getAccessToken , async (req, res) => {
 
       // Return the event data
       console.log(response.data.items)
-      return response.data.items;  // List of events in the specified time range
+let summaryFilterName = 'FREE'
+let filteredFreeSlotEvents = response.data.items.filter(event => {
+  return event.summary.includes(summaryFilterName)
+}).map(event => ({
+  start: event.start,
+  end: event.end,
+  summary: event.summary,
+}));
+console.log(filteredFreeSlotEvents)
+
+    return res.json(filteredFreeSlotEvents)
+      // return response.data.items;  // List of events in the specified time range
   } catch (error) {
       throw new Error('Error fetching calendar availability: ' + error.message);
   }
