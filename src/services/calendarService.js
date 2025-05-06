@@ -37,20 +37,53 @@ exports.createEvent = async (accessToken, eventDetails) => {
 
   const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
 
+  // const event = {
+  //   summary: eventDetails.summary,
+  //   description: eventDetails.description,
+  //   start: { dateTime: eventDetails.start, timeZone: 'UTC' },
+  //   end: { dateTime: eventDetails.end, timeZone: 'UTC' },
+  // };
+
   const event = {
-    summary: eventDetails.summary,
-    description: eventDetails.description,
-    start: { dateTime: eventDetails.start, timeZone: 'UTC' },
-    end: { dateTime: eventDetails.end, timeZone: 'UTC' },
+    'summary': 'MEET Google I/O 2015',
+    'location': '800 Howard St., San Francisco, CA 94103',
+    'description': 'A chance to hear more about Google\'s developer products.',
+    'start': {
+      'dateTime': '2025-05-28T09:00:00-07:00',
+      'timeZone': 'America/Los_Angeles',
+    },
+    'end': {
+      'dateTime': '2025-05-28T17:00:00-07:00',
+      'timeZone': 'America/Los_Angeles',
+    },
+    'attendees': [
+      {'email': 'frajondouglas@gmail.com'},
+    ],
+    'reminders': {
+      'useDefault': false,
+      'overrides': [
+        {'method': 'email', 'minutes': 24 * 60},
+        {'method': 'popup', 'minutes': 60},
+      ],
+    },
+    conferenceData: {
+      createRequest: {
+        requestId: `meet-${Date.now()}`, // must be unique per event
+        conferenceSolutionKey: {
+          type: 'hangoutsMeet'
+        }
+      }
+    }
   };
 
   try {
     const response = await calendar.events.insert({
       calendarId: 'primary',
       resource: event,
+      conferenceDataVersion: 1 // Required to enable Google Meet
     });
 
-    return response.data; // Return the created event details
+    return response.data; 
   } catch (error) {
     console.error('Error creating calendar event:', error);
     throw new Error('Failed to create calendar event');

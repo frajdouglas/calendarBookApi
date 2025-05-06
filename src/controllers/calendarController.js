@@ -17,7 +17,7 @@ exports.getAvailability = async (req, res) => {
   }
 };
 
-exports.createEvent = async (req, res) => {
+exports.postEvent = async (req, res) => {
   const accessToken = req.accessToken;
 console.log('Access Token:', accessToken, ' CREATE EVENT');
   if (!accessToken) {
@@ -25,7 +25,6 @@ console.log('Access Token:', accessToken, ' CREATE EVENT');
   }
 
   const { summary, start, end, description } = req.body;
-
   if (!summary || !start || !end) {
     return res.status(400).send('Missing required fields: summary, start, or end');
   }
