@@ -36,28 +36,27 @@ exports.createEvent = async (accessToken, eventDetails) => {
   oauth2Client.setCredentials({ access_token: accessToken });
 
   const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
+  console.log(eventDetails.meetingStartTime, 'startDateTime', typeof eventDetails.meetingStartTime);
 
-  // const event = {
-  //   summary: eventDetails.summary,
-  //   description: eventDetails.description,
-  //   start: { dateTime: eventDetails.start, timeZone: 'UTC' },
-  //   end: { dateTime: eventDetails.end, timeZone: 'UTC' },
-  // };
+  const startDateTime = new Date(eventDetails.meetingStartTime);
+  const endDateTime = new Date(startDateTime.getTime() + 30 * 60 * 1000); // Add 30 minutes
+
+console.log(startDateTime, startDateTime.toISOString(), endDateTime, eventDetails.timeZone);
 
   const event = {
-    'summary': 'MEET Google I/O 2015',
-    'location': '800 Howard St., San Francisco, CA 94103',
-    'description': 'A chance to hear more about Google\'s developer products.',
+    'summary': `'WeBuild introduction call with ${eventDetails.name}'`,
+    // 'location': '800 Howard St., San Francisco, CA 94103',
+    'description': `${eventDetails.extraDetails}`,
     'start': {
-      'dateTime': '2025-05-28T09:00:00-07:00',
-      'timeZone': 'America/Los_Angeles',
+      'dateTime': startDateTime.toISOString(),
+      'timeZone': `${eventDetails.timeZone}`,
     },
     'end': {
-      'dateTime': '2025-05-28T17:00:00-07:00',
-      'timeZone': 'America/Los_Angeles',
+      'dateTime': endDateTime.toISOString(),
+      'timeZone': `${eventDetails.timeZone}`,
     },
     'attendees': [
-      {'email': 'frajondouglas@gmail.com'},
+      {'email': `${eventDetails.email}`},
     ],
     'reminders': {
       'useDefault': false,

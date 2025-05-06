@@ -20,9 +20,9 @@ router.get('/google/callback', async (req, res) => {
     const tokens = await getTokens(code);
     
     // Log the refresh token - you'll need to save this in your .env file
-    console.log('Refresh Token:', tokens.refresh_token);
-    console.log('Access Token:', tokens.access_token);
-    console.log('Expiry Date:', new Date(tokens.expiry_date));
+    // console.log('Refresh Token:', tokens.refresh_token);
+    // console.log('Access Token:', tokens.access_token);
+    // console.log('Expiry Date:', new Date(tokens.expiry_date));
 
     res.json({ 
       message: 'Authentication successful',

@@ -5,7 +5,7 @@ const refreshAccessToken = require('../utils/refreshAccessToken');
 let tokenStore = {accessToken: null, expiresAt: null}
 
 const getAccessToken = async (req, res, next) => {
-    console.log('getAccessToken middleware called');
+    // console.log('getAccessToken middleware called');
   try {
     // Check if we already have a valid access token in memory
     // let accessToken = tokenStore.get('accessToken');
@@ -13,12 +13,12 @@ const getAccessToken = async (req, res, next) => {
     // console.log(accessToken, expiresAt)
     // If no access token or expired
     if (!tokenStore.accessToken || Date.now() > tokenStore.expiresAt) {
-      console.log('Access token is missing or expired. Refreshing token...');
+      // console.log('Access token is missing or expired. Refreshing token...');
       
       // Refresh the token using the refresh token stored earlier
       let newTokenObject = await refreshAccessToken();
-      console.log(tokenStore, 'tokenStore before')   
-      console.log(newTokenObject, 'newTokenObject')
+      // console.log(tokenStore, 'tokenStore before')   
+      // console.log(newTokenObject, 'newTokenObject')
       // Store the new access token and expiration time in memory
       // let newtoken = newTokenObject.token;
       // let newExpiresAt = Date.now() + newTokenObject.expires_in * 1000;
@@ -30,7 +30,7 @@ const getAccessToken = async (req, res, next) => {
       // tokenStore.set('accessToken', accessToken.token);
       // tokenStore.set('expiresAt', Date.now() + accessToken.expiresIn * 1000); // expiresIn is in seconds
     
-      console.log(tokenStore, 'tokenStore')    
+      // console.log(tokenStore, 'tokenStore')    
     }
     
     // Attach the valid access token to the request object for use in the route

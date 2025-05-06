@@ -19,18 +19,18 @@ exports.getAvailability = async (req, res) => {
 
 exports.postEvent = async (req, res) => {
   const accessToken = req.accessToken;
-console.log('Access Token:', accessToken, ' CREATE EVENT');
+
   if (!accessToken) {
     return res.status(400).send('Access token is missing or invalid');
   }
 
-  const { summary, start, end, description } = req.body;
-  if (!summary || !start || !end) {
-    return res.status(400).send('Missing required fields: summary, start, or end');
+  const { name, email, meetingStartTime, timeZone, extraDetails } = req.body;
+  if (!name || !email || !meetingStartTime || !timeZone || !extraDetails) {
+    return res.status(400).send('Missing required fields: name, email, meetingStartTime, extraDetails');
   }
 
   try {
-    const eventDetails = { summary, start, end, description };
+    const eventDetails = { name, email, meetingStartTime, timeZone, extraDetails };
     const createdEvent = await createEvent(accessToken, eventDetails);
     res.status(201).json(createdEvent);
   } catch (error) {
