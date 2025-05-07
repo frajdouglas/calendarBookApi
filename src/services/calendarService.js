@@ -42,10 +42,9 @@ exports.createEvent = async (accessToken, eventDetails) => {
   const endDateTime = new Date(startDateTime.getTime() + 30 * 60 * 1000); // Add 30 minutes
 
 console.log(startDateTime, startDateTime.toISOString(), endDateTime, eventDetails.timeZone);
-
+console.log(typeof startDateTime, typeof endDateTime, typeof eventDetails.timeZone, typeof eventDetails.email);
   const event = {
-    'summary': `'WeBuild introduction call with ${eventDetails.name}'`,
-    // 'location': '800 Howard St., San Francisco, CA 94103',
+    'summary': `WeBuild introduction call with ${eventDetails.name}`,
     'description': `${eventDetails.extraDetails}`,
     'start': {
       'dateTime': startDateTime.toISOString(),

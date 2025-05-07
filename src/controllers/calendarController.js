@@ -19,7 +19,7 @@ exports.getAvailability = async (req, res) => {
 
 exports.postEvent = async (req, res) => {
   const accessToken = req.accessToken;
-
+console.log('POST CONTROLLER CALLED')
   if (!accessToken) {
     return res.status(400).send('Access token is missing or invalid');
   }
