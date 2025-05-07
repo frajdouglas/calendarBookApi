@@ -78,7 +78,8 @@ exports.createEvent = async (accessToken, eventDetails) => {
     const response = await calendar.events.insert({
       calendarId: 'primary',
       resource: event,
-      conferenceDataVersion: 1 // Required to enable Google Meet
+      conferenceDataVersion: 1,
+      sendUpdates: 'all'
     });
 
     return response.data;
