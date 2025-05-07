@@ -24,13 +24,14 @@ console.log('POST CONTROLLER CALLED')
     return res.status(400).send('Access token is missing or invalid');
   }
 
-  const { name, email, meetingStartTime, timeZone, extraDetails } = req.body;
-  if (!name || !email || !meetingStartTime || !timeZone || !extraDetails) {
+  const { name, email, meetingStartTime, extraDetails } = req.body;
+  console.log(req.body, 'req.body');
+  if (!name || !email || !meetingStartTime) {
     return res.status(400).send('Missing required fields: name, email, meetingStartTime, extraDetails');
   }
 
   try {
-    const eventDetails = { name, email, meetingStartTime, timeZone, extraDetails };
+    const eventDetails = { name, email, meetingStartTime, extraDetails };
     const createdEvent = await createEvent(accessToken, eventDetails);
     res.status(201).json(createdEvent);
   } catch (error) {
