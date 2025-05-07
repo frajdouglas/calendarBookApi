@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const calendarRoutes = require('./routes/calendarRoutes');
+const apiRateLimiter = require('./middleware/rateLimiter');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -10,6 +11,7 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(apiRateLimiter);
 
 // Routes
 app.get('/', (req, res) => {
