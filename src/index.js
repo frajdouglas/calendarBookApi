@@ -8,7 +8,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['https://congenial-carnival-xqr6pxwqx6pf65gv-3001.app.github.dev'],
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(apiRateLimiter);
