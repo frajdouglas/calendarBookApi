@@ -8,6 +8,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
+app.set('trust proxy', 1);
 app.use(cors({
   origin: ['https://webuild-three.vercel.app', 'https://congenial-carnival-xqr6pxwqx6pf65gv-3000.app.github.dev'],
 })); 
