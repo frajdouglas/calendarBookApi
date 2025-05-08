@@ -36,13 +36,9 @@ exports.createEvent = async (accessToken, eventDetails) => {
   oauth2Client.setCredentials({ access_token: accessToken });
 
   const calendar = google.calendar({ version: 'v3', auth: oauth2Client });
-  console.log(eventDetails.meetingStartTime, 'startDateTime', typeof eventDetails.meetingStartTime);
-
   const startDateTime = new Date(eventDetails.meetingStartTime);
   const endDateTime = new Date(startDateTime.getTime() + 30 * 60 * 1000); // Add 30 minutes
 
-  console.log(startDateTime, startDateTime.toISOString(), endDateTime, eventDetails.timeZone);
-  console.log(typeof startDateTime, typeof endDateTime, typeof eventDetails.timeZone, typeof eventDetails.email);
   const event = {
     'summary': `WeBuild introduction call with ${eventDetails.name}`,
     'description': `${eventDetails.extraDetails}`,
@@ -66,7 +62,7 @@ exports.createEvent = async (accessToken, eventDetails) => {
     },
     conferenceData: {
       createRequest: {
-        requestId: `meet-${Date.now()}`, // must be unique per event
+        requestId: `meet-${Date.now()}`,
         conferenceSolutionKey: {
           type: 'hangoutsMeet'
         }

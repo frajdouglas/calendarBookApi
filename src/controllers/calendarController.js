@@ -9,7 +9,6 @@ exports.getAvailability = async (req, res) => {
 
   try {
     const filteredEvents = await getFilteredEvents(accessToken);
-    console.log('Filtered Events:', filteredEvents);
     res.json(filteredEvents);
   } catch (error) {
     console.error('Error fetching calendar availability:', error);
@@ -19,13 +18,11 @@ exports.getAvailability = async (req, res) => {
 
 exports.postEvent = async (req, res) => {
   const accessToken = req.accessToken;
-console.log('POST CONTROLLER CALLED')
   if (!accessToken) {
     return res.status(400).send('Access token is missing or invalid');
   }
 
   const { name, email, meetingStartTime, extraDetails } = req.body;
-  console.log(req.body, 'req.body');
   if (!name || !email || !meetingStartTime) {
     return res.status(400).send('Missing required fields: name, email, meetingStartTime, extraDetails');
   }

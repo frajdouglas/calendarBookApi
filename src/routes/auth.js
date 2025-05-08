@@ -9,22 +9,15 @@ router.get('/google', (req, res) => {
   res.json({ authUrl });
 });
 
-// Handle OAuth callback
+// Handle OAuth callback, this is not used in the app, but can be used to get a new refresh token
 router.get('/google/callback', async (req, res) => {
   try {
     const { code } = req.query;
     if (!code) {
       return res.status(400).json({ error: 'Authorization code is required' });
     }
-
     const tokens = await getTokens(code);
-    
-    // Log the refresh token - you'll need to save this in your .env file
-    // console.log('Refresh Token:', tokens.refresh_token);
-    // console.log('Access Token:', tokens.access_token);
-    // console.log('Expiry Date:', new Date(tokens.expiry_date));
-
-    res.json({ 
+    res.json({
       message: 'Authentication successful',
       refreshToken: tokens.refresh_token,
       accessToken: tokens.access_token,
