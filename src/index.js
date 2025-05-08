@@ -9,8 +9,8 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
-  origin: ['https://congenial-carnival-xqr6pxwqx6pf65gv-3001.app.github.dev'],
-}));
+  origin: ['https://webuild-three.vercel.app', 'https://congenial-carnival-xqr6pxwqx6pf65gv-3000.app.github.dev'],
+})); 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(apiRateLimiter);
