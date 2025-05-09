@@ -1,6 +1,6 @@
-# Calendar Booking API
+# Node.js Calendar Booking API with Google Calendar Integration
 
-A Node.js application built with Express for managing calendar bookings and integrating with Google Calendar.
+A Node.js application built with Express.js to streamline calendar booking management and seamlessly integrate with Google Calendar. This API allows you to fetch availability, create new events, and potentially manage other calendar-related tasks programmatically.
 
 ---
 
@@ -91,7 +91,7 @@ npm test
 ---
 
 ## **Rate Limiting**
-The application implements rate limiting to prevent abuse. Configure rate limiting settings in the `config` file.
+The application implements rate limiting to prevent abuse. Configure rate limiting settings in the 'middleware/rateLimiter.js' file.
 
 ---
 
@@ -99,5 +99,5 @@ The application implements rate limiting to prevent abuse. Configure rate limiti
 
 The api uses the google calendar api to interact with your calendar. You must get a refresh token to enable this express api to use the google calendar api.
 You can run the script 'getGoogleRefreshtoken.js' to fetch a new refresh token.
-You will need a server running to receive the redirect you have set, probably : http://localhost:3000/oauth2callback
+You will need a server running to receive the redirect you have set, for example : http://localhost:3000/oauth2callback
 
